@@ -1,33 +1,15 @@
 <!DOCTYPE html>
-<html lang="th">
+<html>
 <head>
   <meta charset="UTF-8">
-  <title>ควบคุมอุปกรณ์ IoT</title>
+  <title>IoT Dashboard</title>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
   <style>
-    body {
-      font-family: sans-serif;
-      background: #f5f5f5;
-      padding: 40px;
-      text-align: center;
-    }
-    .card {
-      background: white;
-      padding: 20px;
-      margin: 20px auto;
-      border-radius: 10px;
-      width: 300px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-    button {
-      width: 100px;
-      padding: 10px;
-      margin: 10px;
-      font-size: 1em;
-    }
-    .light {
-      font-size: 2em;
-      margin: 10px;
-    }
+    body { font-family: sans-serif; text-align: center; padding: 30px; }
+    .card { background: #fff; border-radius: 8px; padding: 20px; margin: 20px auto; width: 300px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    button { padding: 10px 20px; margin: 10px; font-size: 1em; }
+    .light { font-size: 2em; }
   </style>
 </head>
 <body>
@@ -40,39 +22,196 @@
 
   <h2>ควบคุมไฟ</h2>
   <div class="card">
-    <p>ไฟดวงที่ 1: <span id="led1" class="light">💡</span></p>
+    <p>ไฟ 1: <span id="led1" class="light">💤</span></p>
     <button onclick="toggleLED(1)">Switch 1</button>
-
-    <p>ไฟดวงที่ 2: <span id="led2" class="light">💡</span></p>
+    <p>ไฟ 2: <span id="led2" class="light">💤</span></p>
     <button onclick="toggleLED(2)">Switch 2</button>
   </div>
 
-  <script>
-    // เก็บสถานะไฟ: 0 = ปิด, 1 = เปิด
-    let ledState = { 1: 0, 2: 0 };
+<script>
+  // ✅ ใส่ Firebase config ของคุณที่นี่
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>IoT Dashboard</title>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+  <style>
+    body { font-family: sans-serif; text-align: center; padding: 30px; }
+    .card { background: #fff; border-radius: 8px; padding: 20px; margin: 20px auto; width: 300px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    button { padding: 10px 20px; margin: 10px; font-size: 1em; }
+    .light { font-size: 2em; }
+  </style>
+</head>
+<body>
 
-    function toggleLED(id) {
-      // สลับสถานะ
-      ledState[id] = ledState[id] === 0 ? 1 : 0;
-      // เปลี่ยนไอคอน
-      const icon = ledState[id] === 1 ? '💡' : '💤';
-      document.getElementById("led" + id).textContent = icon;
+  <h2>สถานะเซ็นเซอร์</h2>
+  <div class="card">
+    <p>🌡️ อุณหภูมิ: <span id="temp">--</span> °C</p>
+    <p>💧 ความชื้น: <span id="humi">--</span> %</p>
+  </div>
 
-      // ถ้ามี backend หรือ ESP32 ก็สามารถส่งค่าผ่าน fetch ได้ที่นี่
-      // fetch(`/led${id}?state=${ledState[id]}`)
-    }
+  <h2>ควบคุมไฟ</h2>
+  <div class="card">
+    <p>ไฟ 1: <span id="led1" class="light">💤</span></p>
+    <button onclick="toggleLED(1)">Switch 1</button>
+    <p>ไฟ 2: <span id="led2" class="light">💤</span></p>
+    <button onclick="toggleLED(2)">Switch 2</button>
+  </div>
 
-    // จำลองค่าเซ็นเซอร์ (อุณหภูมิ / ความชื้น)
-    function updateSensorValues() {
-      const temp = (Math.random() * 10 + 25).toFixed(1); // 25 - 35 °C
-      const humi = (Math.random() * 20 + 40).toFixed(1); // 40 - 60 %
-      document.getElementById("temp").textContent = temp;
-      document.getElementById("humi").textContent = humi;
-    }
+<script>
+  // ✅ ใส่ Firebase config ของคุณที่นี่
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>IoT Dashboard</title>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+  <style>
+    body { font-family: sans-serif; text-align: center; padding: 30px; }
+    .card { background: #fff; border-radius: 8px; padding: 20px; margin: 20px auto; width: 300px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    button { padding: 10px 20px; margin: 10px; font-size: 1em; }
+    .light { font-size: 2em; }
+  </style>
+</head>
+<body>
 
-    setInterval(updateSensorValues, 2000);
-    updateSensorValues(); // เรียกตอนเริ่ม
-  </script>
+  <h2>สถานะเซ็นเซอร์</h2>
+  <div class="card">
+    <p>🌡️ อุณหภูมิ: <span id="temp">--</span> °C</p>
+    <p>💧 ความชื้น: <span id="humi">--</span> %</p>
+  </div>
+
+  <h2>ควบคุมไฟ</h2>
+  <div class="card">
+    <p>ไฟ 1: <span id="led1" class="light">💤</span></p>
+    <button onclick="toggleLED(1)">Switch 1</button>
+    <p>ไฟ 2: <span id="led2" class="light">💤</span></p>
+    <button onclick="toggleLED(2)">Switch 2</button>
+  </div>
+
+<script>
+  // ✅ ใส่ Firebase config ของคุณที่นี่
+  const firebaseConfig = {
+  apiKey: "AIzaSyAivnxCGRZWoD1VhRCiwggUDOOo86lamiI",
+  authDomain: "test-9b890.firebaseapp.com",
+  databaseURL: "https://test-9b890-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "test-9b890",
+  storageBucket: "test-9b890.firebasestorage.app",
+  messagingSenderId: "589658096120",
+  appId: "1:589658096120:web:f0d624b378c872d34dd60d",
+  measurementId: "G-NMPV5KFE2F"
+  };
+
+  // ✅ เริ่มต้น Firebase
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
+  // 👀 อ่านค่าเซ็นเซอร์
+  db.ref('sensor').on('value', snapshot => {
+    const data = snapshot.val();
+    document.getElementById("temp").textContent = data.temperature;
+    document.getElementById("humi").textContent = data.humidity;
+  });
+
+  // 👀 อ่านสถานะไฟ
+  db.ref('led').on('value', snapshot => {
+    const state = snapshot.val();
+    document.getElementById("led1").textContent = state[1] === 1 ? '💡' : '💤';
+    document.getElementById("led2").textContent = state[2] === 1 ? '💡' : '💤';
+  });
+
+  // 🔘 สลับสถานะไฟ
+  function toggleLED(id) {
+    const ledRef = db.ref('led/' + id);
+    ledRef.once('value').then(snapshot => {
+      const current = snapshot.val();
+      ledRef.set(current === 1 ? 0 : 1);
+    });
+  }
+</script>
+
+</body>
+</html>
+",
+    databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT_ID.appspot.com",
+    messagingSenderId: "SENDER_ID",
+    appId: "APP_ID"
+  };
+
+  // ✅ เริ่มต้น Firebase
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
+  // 👀 อ่านค่าเซ็นเซอร์
+  db.ref('sensor').on('value', snapshot => {
+    const data = snapshot.val();
+    document.getElementById("temp").textContent = data.temperature;
+    document.getElementById("humi").textContent = data.humidity;
+  });
+
+  // 👀 อ่านสถานะไฟ
+  db.ref('led').on('value', snapshot => {
+    const state = snapshot.val();
+    document.getElementById("led1").textContent = state[1] === 1 ? '💡' : '💤';
+    document.getElementById("led2").textContent = state[2] === 1 ? '💡' : '💤';
+  });
+
+  // 🔘 สลับสถานะไฟ
+  function toggleLED(id) {
+    const ledRef = db.ref('led/' + id);
+    ledRef.once('value').then(snapshot => {
+      const current = snapshot.val();
+      ledRef.set(current === 1 ? 0 : 1);
+    });
+  }
+</script>
+
+</body>
+</html>
+",
+    databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT_ID.appspot.com",
+    messagingSenderId: "SENDER_ID",
+    appId: "APP_ID"
+  };
+
+  // ✅ เริ่มต้น Firebase
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
+  // 👀 อ่านค่าเซ็นเซอร์
+  db.ref('sensor').on('value', snapshot => {
+    const data = snapshot.val();
+    document.getElementById("temp").textContent = data.temperature;
+    document.getElementById("humi").textContent = data.humidity;
+  });
+
+  // 👀 อ่านสถานะไฟ
+  db.ref('led').on('value', snapshot => {
+    const state = snapshot.val();
+    document.getElementById("led1").textContent = state[1] === 1 ? '💡' : '💤';
+    document.getElementById("led2").textContent = state[2] === 1 ? '💡' : '💤';
+  });
+
+  // 🔘 สลับสถานะไฟ
+  function toggleLED(id) {
+    const ledRef = db.ref('led/' + id);
+    ledRef.once('value').then(snapshot => {
+      const current = snapshot.val();
+      ledRef.set(current === 1 ? 0 : 1);
+    });
+  }
+</script>
 
 </body>
 </html>
