@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>ควบคุมอุปกรณ์ IoT</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f5f5f5;
+      padding: 40px;
+      text-align: center;
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      margin: 20px auto;
+      border-radius: 10px;
+      width: 300px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    button {
+      width: 100px;
+      padding: 10px;
+      margin: 10px;
+      font-size: 1em;
+    }
+    .status {
+      font-weight: bold;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>สถานะเซ็นเซอร์</h2>
+  <div class="card">
+    <p>🌡️ อุณหภูมิ: <span id="temp">--</span> °C</p>
+    <p>💧 ความชื้น: <span id="humi">--</span> %</p>
+  </div>
+
+  <h2>ควบคุมไฟ</h2>
+  <div class="card">
+    <p>ไฟดวงที่ 1: <span id="led1">0</span></p>
+    <button onclick="toggleLED(1)">สลับ</button>
+
+    <p>ไฟดวงที่ 2: <span id="led2">0</span></p>
+    <button onclick="toggleLED(2)">สลับ</button>
+  </div>
+
+  <script>
+    // ตัวแปรเก็บสถานะหลอดไฟ
+    let ledState = { 1: 0, 2: 0 };
+
+    function toggleLED(id) {
+      ledState[id] = ledState[id] === 0 ? 1 : 0;
+      document.getElementById("led" + id).textContent = ledState[id];
+
+      // ถ้ามี backend หรือ ESP32 ก็ส่งค่าผ่าน fetch() ได้ที่นี่
+      // fetch(`/led${id}?state=${ledState[id]}`)
+    }
+
+    // แสดงค่าจำลองของเซ็นเซอร์ทุก 2 วินาที
+    function updateSensorValues() {
+      const temp = (Math.random() * 10 + 25).toFixed(1); // 25 - 35 °C
+      const humi = (Math.random() * 20 + 40).toFixed(1); // 40 - 60 %
+      document.getElementById("temp").textContent = temp;
+      document.getElementById("humi").textContent = humi;
+    }
+
+    setInterval(updateSensorValues, 2000);
+    updateSensorValues(); // เรียกทันทีตอนโหลดหน้าเว็บ
+  </script>
+
+</body>
+</html>
