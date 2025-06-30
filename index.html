@@ -24,9 +24,9 @@
       margin: 10px;
       font-size: 1em;
     }
-    .status {
-      font-weight: bold;
-      color: green;
+    .light {
+      font-size: 2em;
+      margin: 10px;
     }
   </style>
 </head>
@@ -40,26 +40,29 @@
 
   <h2>ควบคุมไฟ</h2>
   <div class="card">
-    <p>ไฟดวงที่ 1: <span id="led1">0</span></p>
-    <button onclick="toggleLED(1)">สลับ</button>
+    <p>ไฟดวงที่ 1: <span id="led1" class="light">💡</span></p>
+    <button onclick="toggleLED(1)">Switch 1</button>
 
-    <p>ไฟดวงที่ 2: <span id="led2">0</span></p>
-    <button onclick="toggleLED(2)">สลับ</button>
+    <p>ไฟดวงที่ 2: <span id="led2" class="light">💡</span></p>
+    <button onclick="toggleLED(2)">Switch 2</button>
   </div>
 
   <script>
-    // ตัวแปรเก็บสถานะหลอดไฟ
+    // เก็บสถานะไฟ: 0 = ปิด, 1 = เปิด
     let ledState = { 1: 0, 2: 0 };
 
     function toggleLED(id) {
+      // สลับสถานะ
       ledState[id] = ledState[id] === 0 ? 1 : 0;
-      document.getElementById("led" + id).textContent = ledState[id];
+      // เปลี่ยนไอคอน
+      const icon = ledState[id] === 1 ? '💡' : '💤';
+      document.getElementById("led" + id).textContent = icon;
 
-      // ถ้ามี backend หรือ ESP32 ก็ส่งค่าผ่าน fetch() ได้ที่นี่
+      // ถ้ามี backend หรือ ESP32 ก็สามารถส่งค่าผ่าน fetch ได้ที่นี่
       // fetch(`/led${id}?state=${ledState[id]}`)
     }
 
-    // แสดงค่าจำลองของเซ็นเซอร์ทุก 2 วินาที
+    // จำลองค่าเซ็นเซอร์ (อุณหภูมิ / ความชื้น)
     function updateSensorValues() {
       const temp = (Math.random() * 10 + 25).toFixed(1); // 25 - 35 °C
       const humi = (Math.random() * 20 + 40).toFixed(1); // 40 - 60 %
@@ -68,7 +71,7 @@
     }
 
     setInterval(updateSensorValues, 2000);
-    updateSensorValues(); // เรียกทันทีตอนโหลดหน้าเว็บ
+    updateSensorValues(); // เรียกตอนเริ่ม
   </script>
 
 </body>
